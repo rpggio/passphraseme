@@ -15,9 +15,18 @@ def generate(filename, word_count, sep):
         words = [line.rstrip("\n") for line in f]
 
     try:
-        return sep.join(choice(words) for _ in range(word_count))
+        output = sep.join(choice(words) for _ in range(word_count))
     except:
-        return sep.join(SystemRandom().sample(words, word_count))
+        output = sep.join(SystemRandom().sample(words, word_count))
+    
+    # Capitalize first letter of the output
+    output = output.capitalize()
+
+    # Add number of characters in the last word to the end of the output
+    last_word_length = len(output.split(sep)[-1])
+    output += str(last_word_length)
+
+    return output
 
 
 def main():
@@ -27,7 +36,7 @@ def main():
         metavar="word_count",
         nargs="?",
         const=1,
-        default=7,
+        default=5,
         type=int,
         help="Word count",
     )
